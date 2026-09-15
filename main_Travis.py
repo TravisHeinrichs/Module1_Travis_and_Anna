@@ -1,1 +1,11 @@
 #input code here and change name. Thank you!
+
+import pandas as pd
+
+   # Load the CSV file
+df = pd.read_csv('Metadata and Protein Data for Module 1.csv')
+
+   # Get column names as a list
+column_names = list(df.columns)
+
+print("Column names:", column_names)
