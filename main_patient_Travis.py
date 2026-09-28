@@ -104,31 +104,31 @@ ptau_severe_atherosclerosis_stdev = (statistics.stdev(ptau_levels_of_patients_wi
 
 atherosclerosis_condition_cols = ['None', 'Mild', 'Moderate', 'Severe'] # Setting x-axis labels for bar graph
 
-x = np.arange(len(atherosclerosis_condition_cols))
+x = np.arange(len(atherosclerosis_condition_cols)) #creates a list [0,1,2,3]
 width = 0.2
 
 plt.bar(
-    x - 1.5*width,
-    [x_abeta40_no_atherosclerosis_bar,
-     x_abeta40_mild_atherosclerosis_bar,
-     x_abeta40_moderate_atherosclerosis_bar,
-     x_abeta40_severe_atherosclerosis_bar],
-    width,
+    x - 1.5*width, #subtracts x value by 0.3 (0.2 times 1.5); this is so each bar representing abeta 40 is displaced 0.3 units from each of the x locations [0,1,2,3]
+    [x_abeta40_no_atherosclerosis_bar, #at x = -0.3
+     x_abeta40_mild_atherosclerosis_bar, # at x = 0.7
+     x_abeta40_moderate_atherosclerosis_bar, #at x = 1.7
+     x_abeta40_severe_atherosclerosis_bar], #at x = 2.7
+    width, #width of bar
     label="ABeta40",
-    yerr=[[0,0,0,0],
+    yerr=[[0,0,0,0], # so that standard deviation bar only goes up (assymmetrical)
          [abeta40_no_atherosclerosis_stdev,
          abeta40_mild_atherosclerosis_stdev,
          abeta40_moderate_atherosclerosis_stdev,
          abeta40_severe_atherosclerosis_stdev]],
-    capsize=5
+    capsize=5 #width of the cap on the standard deviation bar
 )
 
 plt.bar(
-    x - 0.5*width,
-    [x_abeta42_no_atherosclerosis_bar,
-     x_abeta42_mild_atherosclerosis_bar,
-     x_abeta42_moderate_atherosclerosis_bar,
-     x_abeta42_severe_atherosclerosis_bar],
+    x - 0.5*width, 
+    [x_abeta42_no_atherosclerosis_bar, # at x =-0.1
+     x_abeta42_mild_atherosclerosis_bar, #at x = 0.9
+     x_abeta42_moderate_atherosclerosis_bar, #at x = 1.9
+     x_abeta42_severe_atherosclerosis_bar], #at x = 2.9
     width,
     label="ABeta42",
     yerr=[[0,0,0,0],
@@ -141,10 +141,10 @@ plt.bar(
 
 plt.bar(
     x + 0.5*width,
-    [x_ttau_no_atherosclerosis_bar,
-     x_ttau_mild_atherosclerosis_bar,
-     x_ttau_moderate_atherosclerosis_bar,
-     x_ttau_severe_atherosclerosis_bar],
+    [x_ttau_no_atherosclerosis_bar, #at x = 0.1
+     x_ttau_mild_atherosclerosis_bar, #at x = 1.1
+     x_ttau_moderate_atherosclerosis_bar, #at x = 2.1
+     x_ttau_severe_atherosclerosis_bar], #at x = 3.1
     width,
     label="tTAU",
     yerr=[[0,0,0,0],
@@ -157,10 +157,10 @@ plt.bar(
 
 plt.bar(
     x + 1.5*width,
-    [x_ptau_no_atherosclerosis_bar,
-     x_ptau_mild_atherosclerosis_bar,
-     x_ptau_moderate_atherosclerosis_bar,
-     x_ptau_severe_atherosclerosis_bar],
+    [x_ptau_no_atherosclerosis_bar, #at x = 0.3
+     x_ptau_mild_atherosclerosis_bar, #at x = 1.3
+     x_ptau_moderate_atherosclerosis_bar, #at x = 2.3
+     x_ptau_severe_atherosclerosis_bar], #at x = 3.3
     width,
     label="pTAU",
     yerr=[[0,0,0,0],
@@ -171,15 +171,15 @@ plt.bar(
     capsize=5
 )
 
-plt.xticks(x, atherosclerosis_condition_cols)
+plt.xticks(x, atherosclerosis_condition_cols) 
 
 plt.xlabel("Atherosclerosis")
 plt.ylabel("Concentration (pg/ug)")
 plt.title("Differences in Amyloid Beta and Tau by Atherosclerosis Severity")
 
-plt.legend(title="Protein")
+plt.legend(title="Protein") #creates the key
 
-f_abeta40, p_abeta40 = stats.f_oneway(
+f_abeta40, p_abeta40 = stats.f_oneway( #lines 182-208 generates the anova 
    abeta40_levels_of_patients_with_no_atherosclerosis,
    abeta40_levels_of_patients_with_mild_atherosclerosis,
    abeta40_levels_of_patients_with_moderate_atherosclerosis,
@@ -208,14 +208,14 @@ f_ptau, p_ptau = stats.f_oneway(
 )
 
 plt.text(
-   0.02, 0.95,
-   "One-Way Anova\n"
+   0.02, 0.95, #coordinates for the text, along with line 217
+   "One-Way Anova\n" #imputes the anova values
    f"Aβ40: F = {f_abeta40:.3f}, p = {p_abeta40:.3f}\n"
    f"Aβ42: F = {f_abeta42:.3f}, p = {p_abeta42:.3f}\n"
    f"tTAU: F = {f_ttau:.3f}, p = {p_ttau:.3f}\n"
    f"pTAU: F = {f_ptau:.3f}, {p_ptau:.3f}",
    transform=plt.gca().transAxes,
-   verticalalignment ="top"
+   verticalalignment ="top" #coordinates correspond to top edge of text
 )
 
 plt.show()
@@ -244,6 +244,7 @@ y = [abeta40_level]
 X = np.array(brain_pH).reshape(-1,1)
 y = np.array(abeta40_level)
 
+
 # Running and graphing linear regression of Amyloid-Beta 40 concentration and Brain pH
 model = LinearRegression()
 model.fit(X,y)
@@ -259,5 +260,82 @@ plt.plot(X, model.predict(X), color = "red")
 plt.xlabel("Brain pH")
 plt.ylabel("Aβ40 Concentration (pg/ug)")
 plt.title("Amyloid-Beta 40 vs Brain pH")
+
+plt.show()
+
+
+X = [brain_pH]
+y = [abeta42_level]
+
+X = np.array(brain_pH).reshape(-1,1)
+y = np.array(abeta42_level)
+
+
+# Running and graphing linear regression of Amyloid-Beta 42 concentration and Brain pH
+model = LinearRegression()
+model.fit(X,y)
+slope = model.coef_[0]
+intercept = model.intercept_
+r2 = model.score(X, y)
+equation = f"y = {slope:2f}x + {intercept:2f}\nR²= {r2:2f}"
+plt.text(0.02, 0.95, equation, transform=plt.gca().transAxes, color = "red", fontsize=12, verticalalignment = "top")
+
+# Creating scatter plot
+plt.scatter(X, y, color="blue")
+plt.plot(X, model.predict(X), color = "red")
+plt.xlabel("Brain pH")
+plt.ylabel("Aβ42 Concentration (pg/ug)")
+plt.title("Amyloid-Beta 42 vs Brain pH")
+
+plt.show()
+
+
+X = [brain_pH]
+y = [ttau_level]
+
+X = np.array(brain_pH).reshape(-1,1)
+y = np.array(ttau_level)
+
+
+# Running and graphing linear regression of ttau concentration and Brain pH
+model = LinearRegression()
+model.fit(X,y)
+slope = model.coef_[0]
+intercept = model.intercept_
+r2 = model.score(X, y)
+equation = f"y = {slope:2f}x + {intercept:2f}\nR²= {r2:2f}"
+plt.text(0.02, 0.95, equation, transform=plt.gca().transAxes, color = "red", fontsize=12, verticalalignment = "top")
+
+# Creating scatter plot
+plt.scatter(X, y, color="blue")
+plt.plot(X, model.predict(X), color = "red")
+plt.xlabel("Brain pH")
+plt.ylabel("tTAU Concentration (pg/ug)")
+plt.title("tTAU vs Brain pH")
+
+plt.show()
+
+X = [brain_pH]
+y = [ptau_level]
+
+X = np.array(brain_pH).reshape(-1,1)
+y = np.array(ptau_level)
+
+
+# Running and graphing linear regression of ptau concentration and Brain pH
+model = LinearRegression()
+model.fit(X,y)
+slope = model.coef_[0]
+intercept = model.intercept_
+r2 = model.score(X, y)
+equation = f"y = {slope:2f}x + {intercept:2f}\nR²= {r2:2f}"
+plt.text(0.02, 0.95, equation, transform=plt.gca().transAxes, color = "red", fontsize=12, verticalalignment = "top")
+
+# Creating scatter plot
+plt.scatter(X, y, color="blue")
+plt.plot(X, model.predict(X), color = "red")
+plt.xlabel("Brain pH")
+plt.ylabel("pTAU Concentration (pg/ug)")
+plt.title("pTAU vs Brain pH")
 
 plt.show()

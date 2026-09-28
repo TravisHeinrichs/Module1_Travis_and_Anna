@@ -1,7 +1,6 @@
 #Name: Travis Heinrichs, tka6pn
 
 import csv #so that I can use the dictreader to convert file into list
-
 class Patient:
     all_patients = []
 #here's my constructor:
