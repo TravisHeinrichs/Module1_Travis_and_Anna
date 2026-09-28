@@ -1,6 +1,7 @@
 #Name: Travis Heinrichs, tka6pn
 from patient_class_Travis import *
 
+# Importing libraries for graphing and statistical analyses
 import matplotlib.pyplot as plt
 from scipy import stats
 import numpy as np
@@ -8,9 +9,11 @@ import statistics
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-Patient.instantiate_from_csv("C:/Users/travi/OneDrive/Documents/BME 2315 Fall 2026/Module1_Travis_and_Anna/Metadata and Protein Data for Module 1.csv")
+Patient.instantiate_from_csv("Metadata and Protein Data for Module 1.csv")
 
-#Bar Graph:
+# Bar graph of Amyloid-Beta and Tau concentrations by Atherosclerosis severity
+
+# Creating empty lists to store the data we want to graph
 abeta40_levels_of_patients_with_no_atherosclerosis = []
 abeta42_levels_of_patients_with_no_atherosclerosis = []
 ttau_levels_of_patients_with_no_atherosclerosis = []
@@ -31,7 +34,7 @@ abeta42_levels_of_patients_with_severe_atherosclerosis = []
 ttau_levels_of_patients_with_severe_atherosclerosis = []
 ptau_levels_of_patients_with_severe_atherosclerosis = []
 
-
+# Adding the data to graph to the lists created above
 for patient in Patient.filter(Patient.all_patients, atherosclerosis = "None"):
    abeta40_levels_of_patients_with_no_atherosclerosis.append(patient.abeta40_level)
    abeta42_levels_of_patients_with_no_atherosclerosis.append(patient.abeta42_level)
@@ -99,7 +102,7 @@ ttau_severe_atherosclerosis_stdev = (statistics.stdev(ttau_levels_of_patients_wi
 ptau_severe_atherosclerosis_stdev = (statistics.stdev(ptau_levels_of_patients_with_severe_atherosclerosis))
 
 
-atherosclerosis_condition_cols = ['None', 'Mild', 'Moderate', 'Severe']
+atherosclerosis_condition_cols = ['None', 'Mild', 'Moderate', 'Severe'] # Setting x-axis labels for bar graph
 
 x = np.arange(len(atherosclerosis_condition_cols))
 width = 0.2
@@ -217,15 +220,17 @@ plt.text(
 
 plt.show()
 
-#Scatter plots:
 
+# Graphing scatter plot of Amyloid-Beta 40 concentration and Brain pH
+
+# Creating empty lists to store the data we want to graph
 brain_pH = []
 ptau_level = []
 ttau_level = []
 abeta40_level = []
 abeta42_level = []
 
-
+# Adding the data we want to the lists created above
 for patient in Patient.all_patients:
    abeta40_level.append(patient.abeta40_level)
    abeta42_level.append(patient.abeta42_level)
@@ -239,7 +244,7 @@ y = [abeta40_level]
 X = np.array(brain_pH).reshape(-1,1)
 y = np.array(abeta40_level)
 
-
+# Running and graphing linear regression of Amyloid-Beta 40 concentration and Brain pH
 model = LinearRegression()
 model.fit(X,y)
 slope = model.coef_[0]
@@ -248,10 +253,11 @@ r2 = model.score(X, y)
 equation = f"y = {slope:2f}x + {intercept:2f}\nR²= {r2:2f}"
 plt.text(0.02, 0.95, equation, transform=plt.gca().transAxes, color = "red", fontsize=12, verticalalignment = "top")
 
+# Creating scatter plot
 plt.scatter(X, y, color="blue")
 plt.plot(X, model.predict(X), color = "red")
 plt.xlabel("Brain pH")
 plt.ylabel("Aβ40 Concentration (pg/ug)")
-plt.title("Aβ40 vs Brain pH")
+plt.title("Amyloid-Beta 40 vs Brain pH")
 
 plt.show()
