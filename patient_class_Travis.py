@@ -4,7 +4,7 @@ import csv #so that I can use the dictreader to convert file into list
 class Patient:
     all_patients = []
 #here's my constructor:
-    def __init__(self, donor_ID: str, age_at_death: int, sex: str, years_of_education: int, apoe_genotype: str, cognitive_status: str, brain_pH = float, thal_score = str, atherosclerosis = str, abeta40_level = float, abeta42_level = float, ttau_level = float, ptau_level = float): 
+    def __init__(self, donor_ID: str, age_at_death: int, sex: str, years_of_education: int, apoe_genotype: str, cognitive_status: str, brain_pH = float, thal_score = str, atherosclerosis = str, arteriolosclerosis = str, abeta40_level = float, abeta42_level = float, ttau_level = float, ptau_level = float): 
             self.donor_ID = donor_ID
             self.age_at_death = age_at_death
             self.sex = sex
@@ -14,6 +14,7 @@ class Patient:
             self.brain_pH = brain_pH
             self.thal_score = thal_score
             self.atherosclerosis = atherosclerosis
+            self.arteriolosclerosis = arteriolosclerosis
             self.abeta40_level = abeta40_level
             self.abeta42_level = abeta42_level
             self.ttau_level = ttau_level
@@ -45,6 +46,7 @@ class Patient:
                     brain_pH = float(row['Brain pH']),
                     thal_score = str(row['Thal']),
                     atherosclerosis = str(row['Atherosclerosis']),
+                    arteriolosclerosis = str(row['Arteriolosclerosis']),
                     abeta40_level= float(row['ABeta40 pg/ug']),
                     abeta42_level = float(row['ABeta42 pg/ug']),
                     ttau_level = float(row['pTAU pg/ug']),
@@ -55,7 +57,7 @@ class Patient:
         return self.brain_pH
 #here's my code for a class method to filter and print
     @classmethod
-    def filter(cls, list, donor_ID:str ="any", age_at_death:int ="any", sex:str ="any", years_of_education:int ="any", apoe_genotype:str ="any", cognitive_status:str ="any", brain_pH:float ="any", thal_score:str ="any", atherosclerosis:str ="any", abeta40_level:float = "any", abeta42_level:float ="any", ttau_level:float ="any", ptau_level:float = "any"):
+    def filter(cls, list, donor_ID:str ="any", age_at_death:int ="any", sex:str ="any", years_of_education:int ="any", apoe_genotype:str ="any", cognitive_status:str ="any", brain_pH:float ="any", thal_score:str ="any", atherosclerosis:str ="any", arteriolosclerosis = "any", abeta40_level:float = "any", abeta42_level:float ="any", ttau_level:float ="any", ptau_level:float = "any"):
         all_patients = list
         remove_list = []
         attr_list = (
@@ -68,6 +70,7 @@ class Patient:
                     brain_pH,
                     thal_score,
                     atherosclerosis,
+                    arteriolosclerosis,
                     abeta40_level,
                     abeta42_level,
                     ttau_level,
@@ -83,6 +86,7 @@ class Patient:
                     "brain_pH",
                     "thal_score",
                     "atherosclerosis",
+                    "arteriolosclerosis",
                     "abeta40_level",
                     "abeta42_level",
                     "ttau_level",
