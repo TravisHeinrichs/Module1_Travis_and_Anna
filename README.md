@@ -8,5 +8,6 @@ Class: BME 2315 - Computation BME<br><br>
   Metadata and Protein Data for Module 1: The data set we analyzed<br>
   main_patient_Travis.py: Main file we worked in that graphed the selected data and ran statistical analyses of it<br>
   patient_class_Travis.py: Class definitions for the main file<br>
+  module1_project.ipynb: Jupyter Notebook with background and project information<br>
 </p>
 
